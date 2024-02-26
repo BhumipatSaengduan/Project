@@ -29,8 +29,6 @@ void customerBuy() { // 1.Apple 2.Banana 3.Bacon 4.Egg 5.Bread 6.Cearal 7.Milk 8
 	cout << "Buy Shampoo (Y/N)";
 	cin >> shampoo;
 }
-	
-
 
 int main() {
 
