@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <chrono>
+#include <climits>
 
 using namespace std;
 
@@ -41,21 +42,26 @@ int main() {
       cout << "Hello, customer "<<"\n";
 
       for (int i = 1; i <= 10; ++i) {
-        cout << "Do you want to buy " << products[i] << "? (1 for Yes, 0 for No): ";
+        cout << "How many " << products[i] << "Do you want to buy ? (0 for No): ";
         cin >> selection;
 
-        if (selection == 1) {
-            totalCost += prices[i];
-            ++Itemsold;
-        } else if (selection != 0) {
-            cout << "Wrong input. Please enter 1 for Yes or 0 for No." << endl;
+        if (selection > 0 ) {
+            totalCost += selection*prices[i];
+            Itemsold += selection;
+            sales[i] += selection;
+        } else if (selection <  0) {
+            cout << "Wrong input. Please enter quantity or 0 for No." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
             --i; // Repeat the iteration for the same product
         }
       }
       cout << "\nSummary:" << endl;
       for (int i = 1; i <= 10; ++i) {
          if (prices[i] > 0) {
-            cout << products[i] << ": " << prices[i] << " Baht" << endl;
+            int numsold = sales[i];
+            int totalnumsold = numsold*prices[i];
+            if( totalnumsold > 0 ) cout << products[i] << ": " << totalnumsold << " Baht" << endl;
          }
       }
       totalRe += totalCost;
@@ -73,24 +79,43 @@ int main() {
    cout << "Total revenue: "<< totalRe <<" Bath" << endl ;
 
    //find the most Sold product
-   int maxsold = 0 ;
-   for (auto& pair : sales){
-    maxsold = max(maxsold, pair.first);
-   } 
+   int maxsold = 0;
+   int minsold = INT_MAX;
+   for (const auto &pair :sales){
+     maxsold = max(maxsold,pair.second);
+     minsold = min(minsold,pair.second);
+   }
+
    cout << "Product(s) sold the most: ";
-   for (auto& pair : sales){
-       if (pair.first == maxsold) cout << products[pair.first]<< " " ;
+   bool firstmaxsold = true;
+   for (const auto& pair : sales){
+       if (pair.first == maxsold){
+        if(!firstmaxsold){
+            cout <<", ";
+        }
+        cout << products[pair.second];
+        firstmaxsold = false;
+       }
    }
    cout << endl ;
    
    // find min product sold 
-   int minsold = sales.begin()->first; 
-   for (auto& pair : sales){
-    minsold = min(minsold, pair.first);
-   }
+   if(minsold == 0) cout <<"No products sold the least." << endl ;
+   else {
    cout << "Product(s) that sell the least: ";
-   for (auto& pair : sales){
-       if (pair.first == minsold) cout << products[pair.first]<< " " ;
+   bool firstminsold = true;
+   for (const auto& pair : sales){
+       if (pair.first == minsold) {
+        if(!firstminsold){
+            cout << ", ";
+        }
+
+        cout << products[pair.second];
+        firstminsold = false ;
+       }
+   }
+   cout << endl;
    }
    return 0 ;   
 }
+
