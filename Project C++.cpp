@@ -1,120 +1,101 @@
 #include <iostream>
-#include <map>
-#include <climits>
+#include <string>
 
 using namespace std;
 
+const int N  = 10;
+// Function to find the index of the product with the highest sales
+int findMaxSalesIndex(const int sales[]) {
+    int maxsold = 0;
+    for (int i = 1; i < N; i++) {
+        if (sales[i] > sales[maxsold]) {
+            maxsold = i;
+        }
+    }
+    return maxsold;
+}
+
+// Function to find the index of the product with the lowest sales
+int findMinSalesIndex(const int sales[]) {
+    int minsold = 0;
+    for (int i = 1; i < N; i++) {
+        if (sales[i] < sales[minsold]) {
+            minsold = i;
+        }
+    }
+    return minsold;
+}
+
 int main() {
-    map <int, string> products = {
-        {1, "Apple"},
-        {2, "Banana"},
-        {3, "Bacon"},
-        {4, "Egg"},
-        {5, "Bread"},
-        {6, "Cereal"},
-        {7, "Milk"},
-        {8, "Coffee"},
-        {9, "Soap"},
-        {10, "Shampoo"}
-    };
-
-    map <int, int> prices = {
-        {1, 10},
-        {2, 5},
-        {3, 50},
-        {4, 7},
-        {5, 15},
-        {6, 20},
-        {7, 10},
-        {8, 15},
-        {9, 18},
-        {10, 30}
-    };
-
-    map <int, int > sales;
+    string products[N] = {"Apple", "Banana", "Bacon", "Egg", "Bread","Cereal", "Milk", "Coffee", "Soap", "Shampoo"};
+    int prices[N] = {10, 5, 50, 7, 15, 20, 10, 15, 18, 30};
     int totalRe = 0;
-    while (true) {
-        int Itemsold = 0;
-        int selection;
-        int totalCost = 0;
+    int totalsales[N] = {0};
 
-        cout << "Hello, customer " << "\n";
+    while(true) {
+        int sales[N] = {0}; 
+        int totalCost = 0; 
+        string name ;
 
-        for (int i = 1; i <= 10; i++) {
-            cout << "How many " << products[i] << " do you want to buy ? (0 for No): ";
+        cout << "Hello, Welcome to the 8-12 store.\n";
+        cout << "This is an automatic response message for online orders from our store.\n";
+        cout << "Can you please tell me the name?"<<endl;
+        getline(cin,name);
+        cout << "Hello, Mr. "<< name << endl;
+        cout << "Here is a list of all orders you can purchase. Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
+
+        for (int i = 0; i < N; i++) {
+            int selection;
+            cout << "How many " << products[i] << " do you want to buy? (0 for No): ";
             cin >> selection;
 
             if (selection > 0) {
                 totalCost += selection * prices[i];
-                Itemsold += selection;
                 sales[i] += selection;
-            }
-            else if (selection < 0) {
-                cout << "Wrong input. Please enter quantity or 0 for No." << endl;
+            } else if (selection < 0) {
+                cout << "Wrong input. Please enter a non-negative integer or 0 for No." << endl;
                 i--; // Repeat the iteration for the same product
             }
         }
-        // 1. clear ราคาของรายคน
-        cout << "\nSummary: " << endl;
-        for (int i = 1; i <= 10; i++) {
-            if (prices[i] > 0) {
-                int numsold = sales[i];
-                int totalnumsold = numsold * prices[i];
-                if (totalnumsold > 0) cout << products[i] << ": " << totalnumsold << " Baht" << endl;
-            }
+
+        cout << "\nHere are all the items Mr. "<< name<< " ordered." << endl;
+        for (int i = 0; i < N; i++) {
+            int totalsold = sales[i] * prices[i];
+            if (totalsold > 0)
+                cout << products[i] << ": " << totalsold << " Baht" << endl;
+                totalsales[i] += sales[i];
         }
+
         totalRe += totalCost;
-        sales[Itemsold]++;
 
         cout << "\nTotal cost: " << totalCost << " Baht" << endl;
-        string Endday;
-        cout << "Enter 'Close' to end the day or input anything else to continue : ";
-        cin >> Endday;
-
-        if (Endday == "Close" or Endday == "close") break;
+        string check;
+        cout << "Please check whether your order is correct or not."<<endl;
+        cout << "If correct, please enter Correct. If not, enter No."<<endl;
+        cin >> check ;
+        if (check == "correct" || check =="Correct" ){
+             cout << "Thank you for using the service."<<endl;
+             cout <<" Have a good day :) " <<endl;
+             string Endday;
+             cout << "Enter 'Close' to end the day or input anything else to continue: ";
+             cin >> Endday;
+             if (Endday == "Close" || Endday == "close") break;
+        }
+        else {
+            
+        }
     }
-    //**** Chat GPT Part 2. ให้ส่วน manager บอกจำนวนสินค้าที่ขายได้มากสุด น้อยสุด
-    // summay
+
+    // part seller
     cout << "\nToday's Summary: " << endl;
-    cout << "Total revenue: " << totalRe << " Baht" << endl;
 
-    //find the most Sold product 
-    int maxsold = 0;
-    int minsold = INT_MAX;
-    for (const auto& pair : sales) {
-        maxsold = max(maxsold, pair.second);
-        minsold = min(minsold, pair.second);
-    }
+    int maxSalesIndex = findMaxSalesIndex(totalsales);
+    cout << "Best selling product: " << products[maxSalesIndex] << " (" << totalsales[maxSalesIndex] << " units)" << endl;
 
-    cout << "Product(s) sold the most: ";
-    bool firstmaxsold = true;
-    for (const auto& pair : sales) {
-        if (pair.first == maxsold) {
-            if (!firstmaxsold) {
-                cout << ", ";
-            }
-            cout << products[pair.second];
-            firstmaxsold = false;
-        }
-    }
-    cout << endl;
+    int minSalesIndex = findMinSalesIndex(totalsales);
+    cout << "Worst selling product: " << products[minSalesIndex] << " (" << totalsales[minSalesIndex] << " units)" << endl;
 
-    // find min product sold 
-    if (minsold == 0) cout << "No products sold the least." << endl;
-    else {
-        cout << "Product(s) that sell the least: ";
-        bool firstminsold = true;
-        for (const auto& pair : sales) {
-            if (pair.first == minsold) {
-                if (!firstminsold) {
-                    cout << ", ";
-                }
+    cout << "Total revenue: " << totalRe << " Bath" << endl;
 
-                cout << products[pair.second];
-                firstminsold = false;
-            }
-        }
-        cout << endl;
-    }
     return 0;
 }
