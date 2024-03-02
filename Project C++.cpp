@@ -4,24 +4,22 @@ using namespace std;
 
 const int N = 10;
 
-void findMaxSalesIndexes(int sales[N], bool is_max[N]) {
+void findMaxSalesIndexes(double sales[N], bool is_max[N]) {
     int max = 0;
     for (int i = 0; i < N; i++) {
         if (sales[i] > max) max = sales[i];
     }
-
     for (int i = 0; i < N; i++) {
         if (sales[i] == max) is_max[i] = true;
         else is_max[i] = false;
     }
 }
 
-void findMinSalesIndexes(int sales[N], bool is_min[N]) {
+void findMinSalesIndexes(double sales[N], bool is_min[N]) {
     int min = 0;
     for (int i = 0; i < N; i++) {
         if (sales[i] < min) min = sales[i];
     }
-
     for (int i = 0; i < N; i++) {
         if (sales[i] == min) is_min[i] = true;
         else is_min[i] = false;
@@ -30,14 +28,14 @@ void findMinSalesIndexes(int sales[N], bool is_min[N]) {
 
 int main() {
     string products[N] = { "Apple", "Banana", "Bacon", "Egg", "Bread","Cereal", "Milk", "Coffee", "Soap", "Shampoo" };
-    int prices[N] = { 10, 5, 50, 7, 15, 20, 10, 15, 18, 30 };
-    int totalRe = 0;
-    int totalsales[N] = { 0 };
+    double prices[N] = { 10, 5, 50, 7, 15, 20, 10, 15, 18, 30 };
+    double totalRe = 0;
+    double totalsales[N] = { 0 };
 
     while (true) {
-        int sales[N] = { 0 };
-        int totalCost = 0;
-        int currentTotalSales[N] = { 0 };
+        double sales[N] = { 0 };
+        double totalCost = 0;
+        double currentTotalSales[N] = { 0 };
         string name;
 
         cout << "Hello, Welcome to the 8-12 store.\n";
@@ -45,7 +43,7 @@ int main() {
         cout << "Can you please tell me the name?" << endl;
         cout << "Enter your name: ";
         getline(cin, name);
-        cout << "Hello, Mr. " << name << endl;
+        cout << "Hello, " << name << endl;
         cout << "Here is a list of all orders you can purchase. Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
 
         for (int i = 0; i < N; i++) {
@@ -56,7 +54,7 @@ int main() {
             int selection;
             if (selection_user != "No") {
                 char* endptr;
-                int value = strtol(selection_user.c_str(), &endptr, 10);
+                double value = strtol(selection_user.c_str(), &endptr, 10);
                 if (endptr == selection_user || *endptr != '\0') {
                     selection = -1;
                 }
@@ -74,19 +72,33 @@ int main() {
             }
         }
 
-        cout << "\nHere are all the items Mr. " << name << " ordered." << endl;
-        for (int i = 0; i < N; i++) {
-            int totalsold = sales[i] * prices[i];
-            if (totalsold > 0)
-                cout << products[i] << ": " << totalsold << " Baht" << endl;
-            currentTotalSales[i] += sales[i];
-        }
         // Discount
-        //string Allmember;
-            /*cout << "Do you have Allmember?" << endl;
-            if (Allmember == "Yes") {
-                
-            }*/
+        string Allmember;
+        cout << "\nDo you have Allmember?\n";
+        cout << "Enter Yes or No: ";
+        getline(cin, Allmember);
+        double RATIO = 0.9;
+        if (Allmember == "Yes" || Allmember == "yes") {
+            totalCost = totalCost * RATIO;
+            cout << "\nHere are all the items " << name << " ordered. (Discounted)" << endl;
+            for (int i = 0; i < N; i++) {
+                double totalsold = sales[i] * prices[i];
+                if (totalsold > 0)
+                    cout << products[i] << ": " << totalsold * RATIO << " Baht" << endl;
+                currentTotalSales[i] += sales[i];
+            }
+        }
+        else {
+            cout << "\nHere are all the items " << name << " ordered." << endl;
+            for (int i = 0; i < N; i++) {
+                double totalsold = sales[i] * prices[i];
+                if (totalsold > 0)
+                    cout << products[i] << ": " << totalsold << " Baht" << endl;
+                currentTotalSales[i] += sales[i];
+
+            }
+        }
+
         cout << "\nTotal cost: " << totalCost << " Baht" << endl;
         cout << "Please check whether your order is correct or not." << endl;
         cout << "If correct, please enter Correct. If not, enter No." << endl;
@@ -112,7 +124,7 @@ int main() {
         }
     }
 
-    // Part seller
+    // Part Manager
     cout << "\nToday's Summary: " << endl;
 
     bool maxSalesIndexes[N] = { false };
