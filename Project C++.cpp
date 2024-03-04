@@ -101,18 +101,38 @@ int main() {
         }
 
         cout << "\nTotal cost: " << totalCost << " Baht" << endl;
-        cout << "Please check whether your order is correct or not." << endl;
-        cout << "If correct, please enter Correct. If not, enter No." << endl;
+        cout << "Admin : Please check whether your order is correct or not." << endl;
+        cout << "Admin : If correct, please enter Correct. If not, enter No." << endl;
+        cout << name <<" :";
         string check;
+        string order;
+        string address;
         getline(cin, check);
         if (check == "correct" || check == "Correct") {
             totalRe += totalCost;
             for (int i = 0; i < N; i++) {
                 totalsales[i] += currentTotalSales[i];
             }
+            cout << "Admin : Do you want to pick up your order in-store or have it delivered to your home? " <<endl;
+            cout << name << " :";
+            getline(cin,order);
+            if ( order == "Store" || order == "store"){
+                cout <<"Admin :Please come pick up the product within 2 business days."<<endl;
+            }
+            else if (order == "home" || order == "Home"){
+                cout <<"Admin : Please enter your address information."<<endl;
+                cout << name <<" :";
+                getline(cin, address);
+                cout <<"Admin : You will receive the product within 2 business days."<<endl;
+                cout <<"Admin : If you haven't received the product yet Please contact the shop."<<endl;
+            }
+            else{
+                cout << "Admin : Wrong input please enter Home or store. " <<endl;
 
-            cout << "Thank you for using the service." << endl;
-            cout << "Have a good day :)\n\n\n\n\n\n" << endl;
+            }
+
+            cout << "Admin : Thank you for using the service." << endl;
+            cout << "Admin : Have a good day :)\n\n\n\n\n\n" << endl;
             cout << "Enter 'Close' to end the day or input anything else to continue: ";
             string endday;
             getline(cin, endday);
@@ -120,7 +140,7 @@ int main() {
             if (endday == "Close" || endday == "close") break;
         }
         else {
-            cout << "We apologize for the inconvenience caused. You can reorder by here.\n\n";
+            cout << "Admin : We apologize for the inconvenience caused. You can reorder by here.\n\n";
             continue;
         }
     }
