@@ -38,13 +38,14 @@ int main() {
         double currentTotalSales[N] = { 0 };
         string name;
 
-        cout << "Hello, Welcome to the 8-12 store.\n";
-        cout << "This is an automatic response message for online orders from our store.\n";
-        cout << "Can you please tell me the name?" << endl;
+        cout << "Admin : Hello, Welcome to the 8-12 store.\n";
+        cout << "Admin : This is an automatic response message for online orders from our store.\n";
+        cout << "Admin : Can you please tell me the name?" << endl;
         cout << "Enter your name: ";
         getline(cin, name);
-        cout << "Hello, " << name << endl;
-        cout << "Here is a list of all orders you can purchase. Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
+        cout << "Admin : Hello, " << name << endl;
+        cout << "Admin : Here is a list of all orders you can purchase. " << endl;
+        cout <<"Admin : Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
 
         for (int i = 0; i < N; i++) {
             cout << "How many " << products[i] << " do you want to buy? (0 for No): ";
@@ -74,7 +75,7 @@ int main() {
 
         // Discount
         string Allmember;
-        cout << "\nDo you have Allmember?\n";
+        cout << "\nAdmin : Do you have Allmember?\n";
         cout << "Enter Yes or No: ";
         getline(cin, Allmember);
         double RATIO = 0.9;
@@ -144,6 +145,13 @@ int main() {
     for (int i = 0; i < N; i++) {
         if (minSalesIndexes[i]) {
             cout << "  - " << products[i] << " (" << totalsales[i] << " units) " << endl;
+        }
+    }
+
+    cout << "Should be bought to replenish stock:" << endl;
+    for (int i = 0; i < N; i++) {
+        if (maxSalesIndexes[i]) {
+            cout << "  - " << products[i]  << endl;
         }
     }
 
