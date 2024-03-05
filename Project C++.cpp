@@ -39,14 +39,14 @@ int main() {
         double currentTotalSales[N] = { 0 };
         string name;
 
-        cout << "Admin : Hello, Welcome to the 8-12 store.\n";
-        cout << "Admin : This is an automatic response message for online orders from our store.\n";
-        cout << "Admin : Can you please tell me the name?" << endl;
+        cout << "Admin: Hello, Welcome to the 8-12 store.\n";
+        cout << "Admin: This is an automatic response message for online orders from our store.\n";
+        cout << "Admin: Can you please tell me the name?" << endl;
         cout << "Enter your name: ";
         getline(cin, name);
-        cout << "Admin : Hello, " << name << endl;
-        cout << "Admin : Here is a list of all orders you can purchase. " << endl;
-        cout <<"Admin : Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
+        cout << "Admin: Hello, " << name << endl;
+        cout << "Admin: Here is a list of all orders you can purchase. " << endl;
+        cout << "Admin: Please enter the quantity of the item to be purchased, or enter 0 to not purchase the item." << endl;
 
         for (int i = 0; i < N; i++) {
             cout << "How many " << products[i] << " do you want to buy? (0 for No): ";
@@ -76,8 +76,8 @@ int main() {
 
         // Discount
         string Allmember;
-        cout << "\nAdmin : Do you have Allmember?\n";
-        cout << "Enter Yes or No: ";
+        cout << "\nAdmin: Do you have Allmember? (Please enter 'Yes' or 'No')\n";
+        cout << name << ": ";
         getline(cin, Allmember);
         double RATIO = 0.9;
         if (Allmember == "Yes" || Allmember == "yes") {
@@ -102,9 +102,8 @@ int main() {
         }
 
         cout << "\nTotal cost: " << totalCost << " Baht" << endl;
-        cout << "Admin : Please check whether your order is correct or not." << endl;
-        cout << "Admin : If correct, please enter Correct. If not, enter No." << endl;
-        cout << name <<" :";
+        cout << "Admin: Please check whether your order is correct or not. (Please enter 'Correct' or 'No')" << endl;
+        cout << name << ": ";
         string check;
         string order;
         string address;
@@ -114,26 +113,26 @@ int main() {
             for (int i = 0; i < N; i++) {
                 totalsales[i] += currentTotalSales[i];
             }
-            cout << "Admin : Do you want to pick up your order in-store or have it delivered to your home? " <<endl;
-            cout << name << " :";
-            getline(cin,order);
-            if ( order == "Store" || order == "store"){
-                cout <<"Admin :Please come pick up the product within 2 business days."<<endl;
+            cout << "Admin : Do you want to pick up your order in-store or have it delivered to your home? (Please enter 'Store' or 'Home')" << endl;
+            cout << name << ": ";
+            getline(cin, order);
+            if (order == "Store" || order == "store") {
+                cout << "Admin: Please come pick up the product within 2 business days." << endl;
             }
-            else if (order == "home" || order == "Home"){
-                cout <<"Admin : Please enter your address information."<<endl;
-                cout << name <<" :";
+            else if (order == "home" || order == "Home") {
+                cout << "Admin: Please enter your address information." << endl;
+                cout << name << ": ";
                 getline(cin, address);
-                cout <<"Admin : You will receive the product within 2 business days."<<endl;
-                cout <<"Admin : If you haven't received the product yet Please contact the shop."<<endl;
+                cout << "Admin: You will receive the product within 2 business days." << endl;
+                cout << "Admin: If you haven't received the product yet, please contact the shop." << endl;
             }
-            else{
-                cout << "Admin : Wrong input please enter Home or store. " <<endl;
+            else {
+                cout << "Admin : Wrong input please enter Home or store. " << endl;
 
             }
 
-            cout << "Admin : Thank you for using the service." << endl;
-            cout << "Admin : Have a good day :)\n\n\n\n\n\n" << endl;
+            cout << "Admin: Thank you for using the service." << endl;
+            cout << "Admin: Have a good day :)\n\n\n\n\n\n" << endl;
             cout << "Enter 'Close' to end the day or input anything else to continue: ";
             string endday;
             getline(cin, endday);
@@ -141,7 +140,7 @@ int main() {
             if (endday == "Close" || endday == "close") break;
         }
         else {
-            cout << "Admin : We apologize for the inconvenience caused. You can reorder by here.\n\n";
+            cout << "Admin: We apologize for the inconvenience caused. You can reorder by here.\n\n";
             continue;
         }
     }
@@ -152,7 +151,7 @@ int main() {
     bool maxSalesIndexes[N] = { false };
     findMaxSalesIndexes(totalsales, maxSalesIndexes);
 
-    cout << "Best selling product:" << endl;
+    cout << "Best selling product: " << endl;
     for (int i = 0; i < N; i++) {
         if (maxSalesIndexes[i]) {
             cout << "  - " << products[i] << " (" << totalsales[i] << " units) " << endl;
@@ -162,17 +161,17 @@ int main() {
     bool minSalesIndexes[N] = { false };
     findMinSalesIndexes(totalsales, minSalesIndexes);
 
-    cout << "Worst selling product:" << endl;
+    cout << "Worst selling product: " << endl;
     for (int i = 0; i < N; i++) {
         if (minSalesIndexes[i]) {
             cout << "  - " << products[i] << " (" << totalsales[i] << " units) " << endl;
         }
     }
 
-    cout << "Should be bought to replenish stock:" << endl;
+    cout << "Should be bought to replenish stock: " << endl;
     for (int i = 0; i < N; i++) {
         if (maxSalesIndexes[i]) {
-            cout << "  - " << products[i]  << endl;
+            cout << "  - " << products[i] << endl;
         }
     }
 
