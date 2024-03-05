@@ -6,8 +6,8 @@ using namespace std;
 const int N = 10;
 
 void findMaxSalesIndexes(double sales[N], bool is_max[N]) {
-    int max = 0;
-    for (int i = 0; i < N; i++) {
+    double max = sales[0];
+    for (int i = 1; i < N; i++) {
         if (sales[i] > max) max = sales[i];
     }
     for (int i = 0; i < N; i++) {
@@ -17,8 +17,8 @@ void findMaxSalesIndexes(double sales[N], bool is_max[N]) {
 }
 
 void findMinSalesIndexes(double sales[N], bool is_min[N]) {
-    int min = 0;
-    for (int i = 0; i < N; i++) {
+    double min = sales[0];
+    for (int i = 1; i < N; i++) {
         if (sales[i] < min) min = sales[i];
     }
     for (int i = 0; i < N; i++) {
