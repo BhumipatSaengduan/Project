@@ -113,7 +113,7 @@ int main() {
             for (int i = 0; i < N; i++) {
                 totalsales[i] += currentTotalSales[i];
             }
-            cout << "Admin : Do you want to pick up your order in-store or have it delivered to your home? (Please enter 'Store' or 'Home')" << endl;
+            cout << "Admin: Do you want to pick up your order in-store or have it delivered to your home? (Please enter 'Store' or 'Home')" << endl;
             cout << name << ": ";
             getline(cin, order);
             if (order == "Store" || order == "store") {
@@ -127,7 +127,7 @@ int main() {
                 cout << "Admin: If you haven't received the product yet, please contact the shop." << endl;
             }
             else {
-                cout << "Admin : Wrong input please enter Home or store. " << endl;
+                cout << "Admin: Wrong input please enter Home or store. " << endl;
 
             }
 
